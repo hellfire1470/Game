@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CameraAutoNavigation.cs" />
+     <Compile Include="Assets\CharacterSelectionScreenObject.cs" />
      <Compile Include="Assets\Resources\OptionsScreenObject.cs" />
      <Compile Include="Assets\Scripts\Global.cs" />
      <Compile Include="Assets\Scripts\LoginScreenObject.cs" />

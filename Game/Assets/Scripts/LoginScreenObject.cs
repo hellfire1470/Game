@@ -9,15 +9,16 @@ using UnityEngine.UI;
 public class LoginScreenObject : MonoBehaviour {
 
 	private Button _buttonLogin;
-	private Button _buttonOptions;
 
 	private Toggle _toggleKeepUsername;
 
 	private InputField _inputUser;
 	private InputField _inputPass;
+    private Text _textError;
 
 	// Use this for initialization
 	void Start () {
+        _textError = transform.Find("TextError").gameObject.GetComponent<Text>();
 		_inputUser = GetComponentsInChildren<InputField> () [0];
 		_inputPass = GetComponentsInChildren<InputField> () [1];
 
@@ -49,15 +50,15 @@ public class LoginScreenObject : MonoBehaviour {
 			}
 			Global.Client.SendBytes(NetworkHelper.Serialize(new LoginRequest(){Username = _inputUser.text, Password = _inputPass.text}));
 		});
-
-		_buttonOptions = GetComponentsInChildren<Button> ()[1];
-		_buttonOptions.onClick.AddListener (delegate {
-			GameObject.Find ("MenuContainer").GetComponent<Animator>().SetTrigger("Options");
-		});
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void ShowError(string text)
+	{
+		_textError.text = text;
+	}
+
+	public void ClearError()
+	{
+		ShowError("");
 	}
 }
