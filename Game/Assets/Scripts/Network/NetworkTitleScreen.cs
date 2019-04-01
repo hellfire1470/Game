@@ -1,8 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using Network;
-using Network.Packages;
+
+using GameData.Network;
+using GameData.Network.Packages;
+using GameData.Network.Packages.Abstract;
 
 public class NetworkTitleScreen : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class NetworkTitleScreen : MonoBehaviour
     public void DataReceived(object sender, NetworkReceiveEventArgs e)
     {
         Response response;
-        switch (NetworkHelper.GetPackageType(e.Data))
+        switch (NetworkHelperExtention.GetPackageType(e.Data))
         {
             case PackageType.Login:
                 response = NetworkHelper.Deserialize<LoginResponse>(e.Data);
@@ -43,26 +45,26 @@ public class NetworkTitleScreen : MonoBehaviour
 
             case PackageType.CreateCharacter:
                 response = NetworkHelper.Deserialize<CreateCharacterResponse>(e.Data);
-                if(response.Success)
+                if (response.Success)
                 {
                     Debug.Log("Character Created");
                 }
-                else 
+                else
                 {
                     MainThreadExecution.OnMainThread(delegate
                     {
                         switch (((CreateCharacterResponse)response).Error)
                         {
-                            case GameData.ErrorResult.NameExists:
+                            case ResultType.NameExists:
                                 FindObjectOfType<CharacterCreationScreenObject>().ShowError("Name already exists");
                                 break;
-                            case GameData.ErrorResult.InvalidName:
+                            case ResultType.InvalidName:
                                 FindObjectOfType<CharacterCreationScreenObject>().ShowError("Invalid Name");
                                 break;
-                            case GameData.ErrorResult.CharacterLimit:
+                            case ResultType.CharacterLimit:
                                 FindObjectOfType<CharacterCreationScreenObject>().ShowError("Character Limit Reached");
                                 break;
-                            case GameData.ErrorResult.UnknownError:
+                            case ResultType.UnknownError:
                                 FindObjectOfType<CharacterCreationScreenObject>().ShowError("Unknown Error");
                                 break;
                         }

@@ -113,7 +113,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AutoRotation.cs" />
     <Compile Include="Assets\CameraAutoNavigation.cs" />
+    <Compile Include="Assets\CharacterAppearance.cs" />
     <Compile Include="Assets\CharacterCreationScreenObject.cs" />
     <Compile Include="Assets\Resources\OptionsScreenObject.cs" />
     <Compile Include="Assets\Scripts\Global.cs" />
